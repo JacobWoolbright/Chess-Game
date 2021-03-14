@@ -30,6 +30,6 @@ def defaultBoard():
     board.positions['d1'] = Queen(White(), 'd1')
     board.positions['e1'] = King(White(), 'e1')
 
-    # board.positions['d4'] = Rook(White(), 'd4')
+    board.positions['d4'] = Rook(White(), 'd4')
 
     return board
