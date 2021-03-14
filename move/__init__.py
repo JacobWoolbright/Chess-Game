@@ -80,6 +80,32 @@ def move(board, string):
     #other captures
     elif 'x' in string:
         allCaptures = []
+        attackerColumn = string[3]
+        for i in range(8):
+            i += 1
+            position = board.positions[attackerColumn + str(i)]
+            if position is not None:
+                allCaptures.append(position.generateValidCaptures(board))
+        allMoves = []
+        for item in allCaptures:
+            for move in item:
+                if move not in allMoves:
+                    allMoves.append(move)
+                else:
+                    print('Invalid move!')
+                    return False
+        for i, item in enumerate(allCaptures):
+            for move in item:
+                if move == string:
+                    pieces = []
+                    for t in range(8):
+                        thing = board.positions[attackerColumn + str(t+1)]
+                        if thing is not None:
+                            pieces.append(thing)
+                    piece = pieces[i]
+        board.positions[string[2:]] = piece
+        board.positions[piece.position] = None
+        board.positions[string[2:]].position = string[2:]
     #other piece moves
     else:
         if board.moves % 2 == 0:

@@ -14,4 +14,3 @@ while True:
     if newBoard is not False:
         board = newBoard
         board.moves += 1
-
