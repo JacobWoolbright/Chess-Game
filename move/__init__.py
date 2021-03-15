@@ -2,6 +2,10 @@ from pieces import Pawn, Rook
 from colors import Black, White
 
 def move(board, string):
+    if board.moves % 2 == 0:
+        color = Black
+    else:
+        color = White
 
     #pawn move
     if len(string) == 2:
@@ -18,7 +22,7 @@ def move(board, string):
         if board.positions[string] is not None:
             print('Invalid move!')
             return False
-        if board.moves % 2 == 0:
+        if color == Black:
             if type(board.positions[letter + str(int(number) + 1)]) == Pawn and type(board.positions[letter + str(int(number) + 1)].color) == Black:
                 board.positions[string] = board.positions[letter + str(int(number) + 1)]
                 board.positions[string].hasMoved = True
@@ -53,7 +57,7 @@ def move(board, string):
         for i in range(8):
             i += 1
             position = board.positions[attackerColumn + str(i)]
-            if position is not None:
+            if position is not None and type(position.color) == color:
                 allCaptures.append(position.generateValidCaptures(board))
         allMoves = []
         for item in allCaptures:
@@ -80,9 +84,35 @@ def move(board, string):
     #other captures
     elif 'x' in string:
         allCaptures = []
+        attackerColumn = string[2]
+        for i in range(8):
+            i += 1
+            position = board.positions[attackerColumn + str(i)]
+            if position is not None and type(position.color) == color:
+                allCaptures.append(position.generateValidCaptures(board))
+        allMoves = []
+        for item in allCaptures:
+            for move in item:
+                if move not in allMoves:
+                    allMoves.append(move)
+                else:
+                    print('Invalid move!')
+                    return False
+        for i, item in enumerate(allCaptures):
+            for move in item:
+                if move == string:
+                    pieces = []
+                    for t in range(8):
+                        thing = board.positions[attackerColumn + str(t+1)]
+                        if thing is not None:
+                            pieces.append(thing)
+                    piece = pieces[i]
+        board.positions[string[2:]] = piece
+        board.positions[piece.position] = None
+        board.positions[string[2:]].position = string[2:]
     #other piece moves
     else:
-        if board.moves % 2 == 0:
+        if color == Black:
             currentColor = Black
         else:
             currentColor = White

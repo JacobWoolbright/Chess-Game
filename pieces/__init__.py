@@ -104,7 +104,7 @@ class Rook:
             i += 1
             piece = board.positions[self.position[-2] + str(int(self.position[-1]) + i)]
             if piece is not None:
-                captures.append(piece)
+                captures.append('rx' + self.position[-2] + str(int(self.position[-1]) + i))
                 break
         # down
         for i in range(int(self.position[-1]) - 1):
