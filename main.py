@@ -1,5 +1,4 @@
-from chessBoard import Board
-from boards import defaultBoard
+from boards.defaultBoard import defaultBoard
 from move import move
 
 board = defaultBoard()

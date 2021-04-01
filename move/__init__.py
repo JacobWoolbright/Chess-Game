@@ -1,4 +1,5 @@
-from pieces import Pawn, Rook
+from pieces.pawn import Pawn
+from pieces.rook import Rook
 from colors import Black, White
 
 def move(board, string):
